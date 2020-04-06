@@ -1,24 +1,29 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import {Navbar} from './Components/navbar'
+import {List} from './Components/List'
+import { IListElement } from './Interfaces/ListElement';
+import {Footer} from './Components/Footer'
 
 function App() {
+
+  const [list, setList] = useState<IListElement[]>([])
+  
+  const addHandler = (title: string) => {
+    const newListElement: IListElement = {
+      Title: title,
+      Id: Date.now()
+    }
+    setList(prev => [newListElement, ...prev])
+  }
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div id='root' className="grey darken-4">
+      <Navbar OnAdd={addHandler}/>
+      <div className="container mainContainer">
+        <List {...{elements: list}}/>
+      </div>
+      <Footer />
     </div>
   );
 }
