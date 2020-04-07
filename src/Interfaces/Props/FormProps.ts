@@ -1,3 +1,5 @@
+import { IListElement } from "../ListElement";
+
 export interface FormProps {
-    OnAdd(newTitne: string): void
+    OnAdd(fileElements: IListElement[]): void
 }

@@ -8,12 +8,8 @@ function App() {
 
   const [list, setList] = useState<IListElement[]>([])
   
-  const addHandler = (title: string) => {
-    const newListElement: IListElement = {
-      Title: title,
-      Id: Date.now()
-    }
-    setList(prev => [newListElement, ...prev])
+  const addHandler = (object: IListElement[]) => {
+    setList(object)
   }
 
 

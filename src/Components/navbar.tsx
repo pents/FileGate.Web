@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {FormProps} from '../Interfaces/Props/FormProps'
-
+import { IListElement } from '../Interfaces/ListElement';
+import {ApiGetCall} from '../Functions/ApiGetCall'
 
 export function Navbar(props: FormProps) {
     const [title, setTitle] = useState<string>("")
@@ -9,11 +10,14 @@ export function Navbar(props: FormProps) {
         setTitle(event.target.value)
     }
 
-    const onButtonPressHandler = (event: React.MouseEvent) => {
-    
-            props.OnAdd(title)
-            setTitle("")
-        
+    const onButtonPressHandler = async (event: React.MouseEvent) => {
+        const data = await ApiGetCall<IListElement[]>("http://192.168.1.83:8095/api/File/"+title);
+        if (data.parsedBody === undefined){
+            console.log(data.error)
+            // Show error
+        }else{
+            props.OnAdd(data.parsedBody)
+        }         
     }
 
     return (
@@ -21,7 +25,7 @@ export function Navbar(props: FormProps) {
         <div className="nav-wrapper grey darken-2">
             <div className="row">
                 <div className="col s1 l2 push-s9">
-                    <a href="/" className="brand-logo" >FileGate</a>
+                    <a href="/" className="brand-logo">FileGate</a>
                 </div> 
                 <div className="col s8 l7 offset-l2">
                     <input value={title} type="text" id="title" placeholder="Client connection ID" 
