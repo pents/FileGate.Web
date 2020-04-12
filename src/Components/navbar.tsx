@@ -11,11 +11,13 @@ export function Navbar(props: FormProps) {
 
     const onKeyPressHandler = async (event: React.KeyboardEvent) => {
         if (event.key === "Enter"){
+            props.SetPlaceholder(false)
             await fetchFileList(props, title);
         }
     }
 
     const onButtonPressHandler = async (event: React.MouseEvent) => {
+        props.SetPlaceholder(false)
         await fetchFileList(props, title);
     }
 
