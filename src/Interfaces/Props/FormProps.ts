@@ -1,5 +1,6 @@
 import { IListElement } from "../ListElement";
 
 export interface FormProps {
-    OnAdd(fileElements: IListElement[]): void
+    SetList(fileElements: IListElement[]): void
+    SetClientId(id: string) :void
 }

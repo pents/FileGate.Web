@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import {FormProps} from '../Interfaces/Props/FormProps'
-import { IListElement } from '../Interfaces/ListElement';
-import {ApiGetCall} from '../Functions/ApiGetCall'
+import {fetchFileList} from '../Functions/FilegateApiCalls'
 
 export function Navbar(props: FormProps) {
     const [title, setTitle] = useState<string>("")
@@ -10,14 +9,14 @@ export function Navbar(props: FormProps) {
         setTitle(event.target.value)
     }
 
+    const onKeyPressHandler = async (event: React.KeyboardEvent) => {
+        if (event.key === "Enter"){
+            await fetchFileList(props, title);
+        }
+    }
+
     const onButtonPressHandler = async (event: React.MouseEvent) => {
-        const data = await ApiGetCall<IListElement[]>("http://192.168.1.83:8095/api/File/"+title);
-        if (data.parsedBody === undefined){
-            console.log(data.error)
-            // Show error
-        }else{
-            props.OnAdd(data.parsedBody)
-        }         
+        await fetchFileList(props, title);
     }
 
     return (
@@ -27,11 +26,12 @@ export function Navbar(props: FormProps) {
                 <div className="col s1 l2 push-s9">
                     <a href="/" className="brand-logo">FileGate</a>
                 </div> 
-                <div className="col s8 l7 offset-l2">
-                    <input value={title} type="text" id="title" placeholder="Client connection ID" 
-                    className="center" style={{ width: "50%" }} onChange={changeHandler}>
+                <div className="col s8 l7 offset-l2 pull-s1">
+                    <input value={title} type="text" id="title" placeholder="Client ID" 
+                    className="center wordBreak" style={{ width: "50%" }} onChange={changeHandler}>
                     </input>
-                    <button className="btn waves-effect waves-light blue darken-1" type="submit" name="action" onClick={onButtonPressHandler}>Connect</button>
+                    <button className="btn waves-effect waves-light orange darken-2" 
+                    type="submit" name="action" onClick={onButtonPressHandler} onKeyPress={onKeyPressHandler}>Connect</button>
                 </div>
             </div>
         </div>

@@ -29,3 +29,7 @@ body {
   margin-top: auto;
   display: flex;
 }
+
+.wordBreak{
+  word-wrap: break-word;
+}

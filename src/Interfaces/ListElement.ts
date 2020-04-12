@@ -1,5 +1,5 @@
 export interface IListElement{
-    FullName: string
-    Id: number,
-    Size: number
+    fullName: string
+    id: string,
+    size: number
 }

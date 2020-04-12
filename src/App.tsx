@@ -7,17 +7,21 @@ import {Footer} from './Components/Footer'
 function App() {
 
   const [list, setList] = useState<IListElement[]>([])
+  const [clientId, setClientId] = useState<string>("")
   
-  const addHandler = (object: IListElement[]) => {
+  const listhandler = (object: IListElement[]) => {
     setList(object)
   }
 
+  const clientSetter = (id: string) => {
+    setClientId(id)
+  }
 
   return (
     <div id='root' className="grey darken-4">
-      <Navbar OnAdd={addHandler}/>
+      <Navbar SetList={listhandler} SetClientId={clientSetter}/>
       <div className="container mainContainer">
-        <List {...{elements: list}}/>
+        <List elements={list} clientId={clientId}/>
       </div>
       <Footer />
     </div>
